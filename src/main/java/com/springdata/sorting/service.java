@@ -52,13 +52,10 @@ package com.springdata.sorting;
 //        userRepository.saveAll(en);
 //    }
     public Page <entity>getvalue(int page,int size,String sortby){
-        Pageable send=PageRequest.of(page,size,Sort.by(sortby).descending());
+        Pageable send=PageRequest.of(page,size,Sort.by(sortby).ascending());
         return userRepository.findAll(send);
     }
-
-
-
-        }
+}
 
 
 
