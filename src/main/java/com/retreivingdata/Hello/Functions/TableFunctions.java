@@ -1,26 +1,26 @@
 package com.retreivingdata.Hello.Functions;
-
-import com.retreivingdata.Hello.BusinessLogic.Logics;
-import com.retreivingdata.Hello.TableCreation.Table;
+import com.retreivingdata.Hello.BusinessLogic.LogicsServices;
+import com.retreivingdata.Hello.TableCreation.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("http://localhost:4200/")
+
 @RestController
 @RequestMapping("/api/v1")
 public class TableFunctions {
 
     @Autowired
-    private Logics logics;
+    private LogicsServices logics;
 
-    @GetMapping()
-public List<Table> findingData(){
+    @GetMapping("/get")
+public List<Employee> findingData(){
         return  logics.getAllData();
     }
     @PostMapping("/post")
-    public  Table postingData(@RequestBody Table tabledata){
+    public  Employee postingData(@RequestBody Employee tabledata){
         return  logics.createtable(tabledata);
     }
 
@@ -31,23 +31,23 @@ public List<Table> findingData(){
 
 }
 @GetMapping("/sortby")
-public List<Table>findByName(@RequestParam(required = false)String Bookname){
+public List<Employee> findByName(@RequestParam(required = false)String Bookname){
         return logics.findByName(Bookname);
 }
 
 
 @GetMapping("/sortbycode")
-    public List<Table>findTheBookCode(@RequestParam (name= "lowerBound") int lowerBound,
+    public List<Employee> findTheBookCode(@RequestParam (name= "lowerBound") int lowerBound,
                                       @RequestParam(name= "upperBound")  int upperBound){
         return logics.findByBookCode(lowerBound,upperBound);
 }
 @GetMapping("/sortbyprice")
-public List<Table>findTheBookPrice(@RequestParam(name = "greater")long greater,
+public List<Employee> findTheBookPrice(@RequestParam(name = "greater")long greater,
                                    @RequestParam(name = "lesser")long lesser){
         return logics.findByPrice(greater,lesser);
 }
 @GetMapping("/sortbychar")
-    public List<Table>findByStartCharAndEndChar(@RequestParam("startLetter")char startLetter,
+    public List<Employee> findByStartCharAndEndChar(@RequestParam("startLetter")char startLetter,
                                                  @RequestParam("endLetter")char endLetter){
     return logics.nameStartsWithAndEnd(startLetter,endLetter);
     }

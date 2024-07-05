@@ -1,27 +1,29 @@
 package com.retreivingdata.Hello.BusinessLogic;
 import com.retreivingdata.Hello.Repository.TableRepository;
 import com.retreivingdata.Hello.Specification.Filtration;
-import com.retreivingdata.Hello.TableCreation.Table;
+import com.retreivingdata.Hello.TableCreation.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class Logics {
+public class LogicsServices {
 
     @Autowired
     private TableRepository tableRepository;
+    private  Filtration filtration;
 
 
-    public List<Table> getAllData() {
+    public List<Employee> getAllData()    {
         return tableRepository.findAll();
     }
 
 
-    public Table createtable(Table postdetails) {
+    public Employee createtable(Employee postdetails) {
         return tableRepository.save(postdetails);
     }
 
@@ -30,21 +32,21 @@ public class Logics {
 
         return "Deleted";
     }
-public List<Table>findByName(String Bookname) {
-    Specification<Table> specification = Filtration.callingByName(Bookname);
+public List<Employee> findByName(String Bookname) {
+    Specification<Employee> specification = filtration.callingByName(Bookname);
     return tableRepository.findAll(specification);
 }
 
-    public List<Table>findByBookCode(int lowerBound,int upperBound){
-        Specification<Table>specification=Filtration.betweenNumbers(lowerBound,upperBound);
+    public List<Employee> findByBookCode (int lowerBound,int upperBound){
+        Specification<Employee>specification=Filtration.betweenNumbers(lowerBound,upperBound);
         return  tableRepository.findAll(specification);
     }
-    public List<Table>findByPrice(long greater,long lesser){
-        Specification<Table>specification=Filtration.priceBetween(greater,lesser);
+    public List<Employee> findByPrice(long greater,long lesser){
+        Specification<Employee>specification=Filtration.priceBetween(greater,lesser);
         return tableRepository.findAll(specification);
     }
-    public List<Table>nameStartsWithAndEnd(char startLetter,char endLetter){
-        Specification<Table>specification=Filtration.authorStartsWithAndEndsWith(startLetter, endLetter);
+    public List<Employee> nameStartsWithAndEnd(char startLetter,char endLetter){
+        Specification<Employee>specification=Filtration.authorStartsWithAndEndsWith(startLetter, endLetter);
         return tableRepository.findAll(specification);
     }
 }
